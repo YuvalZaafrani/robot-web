@@ -1,74 +1,77 @@
 import React from 'react';
-import { HelpCircle, ChevronDown } from 'lucide-react';
-import { Metadata } from 'next';
+import Link from 'next/link';
+import { pageMetadata } from '../lib/seo';
+import SeoJsonLd from '../components/SeoJsonLd';
 
-export const metadata: Metadata = {
-  title: 'שאלות נפוצות | רובוט.פרו',
-  description: 'תשובות לכל השאלות הנפוצות על רובוטים שואבים לדירות קטנות.',
-};
+export const metadata = pageMetadata({
+  title: 'שאלות נפוצות על רובוט שואב שוטף לדירה קטנה',
+  description:
+    'מענה מהיר לשאלות לפני קנייה ושימוש: רעש, שטיחים, חיות מחמד, תחנה, מיפוי, כבלים ותחזוקה. כולל סכמת FAQPage.',
+  path: '/faq',
+});
 
 const faqs = [
-  {
-    q: "האם רובוט שואב באמת שוטף את הרצפה?",
-    a: "חשוב לתאם ציפיות: רוב הרובוטים מבצעים 'ניגוב לח' ולא שטיפה כמו ספונג'ה עם דלי מים. זה מצוין לתחזוקה יומיומית והסרת אבק דק, אבל לא יסיר כתמים קשים מאוד."
-  },
-  {
-    q: "האם צריך אינטרנט בבית כדי שהרובוט יעבוד?",
-    a: "הרובוט יכול לעבוד בלחיצת כפתור פיזית גם ללא אינטרנט, אבל כדי להגדיר קירות וירטואליים, לו\"ז ניקיון ולראות מפה - חובה לחבר אותו ל-WiFi."
-  },
-  {
-    q: "כל כמה זמן צריך להחליף חלקים?",
-    a: "מומלץ להחליף פילטר HEPA ומברשת צד כל 3-6 חודשים (תלוי בשימוש), ואת המברשת הראשית כל 6-12 חודשים. האפליקציה בדרך כלל תתריע לכם."
-  },
-  {
-    q: "האם הוא יפול במדרגות?",
-    a: "לא. לכל הרובוטים המודרניים יש חיישני מצוק (Cliff Sensors) בתחתית שמזהים נפילה ועוצרים את הרובוט מיידית."
-  },
-  {
-    q: "כמה מקום צריך להשאיר לעמדת הטעינה?",
-    a: "היצרנים ממליצים על 50 ס\"מ מכל צד, אבל בדירות קטנות מניסיון אפשר להסתדר גם עם 10-20 ס\"מ, כל עוד לרובוט יש גישה ישרה ופנויה לעמדה."
-  }
+  { q: "האם רובוט שואב באמת יכול להחליף שטיפה ידנית?", a: "בדירות קטנות התשובה היא כמעט כן מוחלט. הרובוטים המודרניים מצוינים בתחזוקה יומיומית שמונעת הצטברות לכלוך, כך שצריך שטיפה ידנית יסודית רק פעם בכמה שבועות." },
+  { q: "האם הרובוט יפול במדרגות?", a: "לא. רוב הדגמים כוללים חיישני מצוק (Cliff) שמזהים קצה ועוצרים את הרובוט בזמן." },
+  { q: "כמה רעש הרובוט עושה?", a: "במצב רגיל, רוב הרובוטים פועלים בעוצמה של 60-65 דציבלים - דומה למזגן פועל. בדירה קטנה מומלץ להפעילם כשאתם מחוץ לבית או ב'מצב שקט'." },
+  { q: "האם הרובוט מסתדר עם שטיחים?", a: "כן, רוב הדגמים מזהים שטיחים אוטומטית, מגבירים עוצמת שאיבה ומרימים את מטלית השטיפה כדי לא להרטיב את השטיח." },
+  { q: "מה קורה אם יש לי כלב או חתול?", a: "חפשו דגמים עם עוצמת שאיבה של 4000Pa ומעלה ומברשות סיליקון שמונעות הסתבכות של שיער." },
+  { q: "האם צריך אינטרנט כדי להפעיל את הרובוט?", a: "אפשר להפעיל בלחיצת כפתור פיזית, אבל כדי ליהנות ממיפוי, לוחות זמנים ועדכונים, חובה חיבור ל-Wi-Fi ואפליקציה." },
+  { q: "כמה מקום תופסת תחנת העגינה?", a: "תחנה בסיסית תופסת שטח של כ-30 ס״מ. תחנת ריקון אוטומטית דורשת גובה של כ-40-50 ס״מ ושטח רצפה גדול יותר." },
+  { q: "האם הרובוט יודע להימנע מכבלים על הרצפה?", a: "רק דגמים עם זיהוי מכשולים מתקדם (מצלמה/חיישנים חכמים) יודעים להימנע מחפצים קטנים כמו כבלים וגרביים. בדגמים פשוטים יותר כדאי 'לפנות' את הרצפה לפני ההפעלה." },
+  { q: "איזה גובה רובוט מתאים לדירה קטנה עם ספה נמוכה?", a: "הכלל הכי חשוב: למדוד את המרווח מתחת לספה/מיטה. אם המרווח קטן מ-10 ס״מ, חפשו דגם נמוך (Slim) כדי שלא יישארו אזורים שלא נוקו." },
+  { q: "תחנת ריקון/שטיפה שווה בדירה קטנה?", a: "רק אם יש לכם מקום קבוע שמסתדר בבית. בדירה קטנה לפעמים עדיף תחנה קטנה יותר או בלי תחנה בכלל, כדי לא לבזבז שטח יקר." },
+  { q: "האם רובוט שואב שוטף מתאים לפרקט?", a: "כן, אבל חשוב לבחור דגם ששולט בכמות המים ושומר על מטלית לחה ולא רטובה מדי. בפרקט עדיף גם להימנע מהפעלת שטיפה כשהבית ריק אם יש סיכון לנזילות." },
+  { q: "כל כמה זמן צריך להחליף מסננים/מברשות?", a: "זה משתנה לפי שימוש ואבק, אבל בדירה קטנה רוב האנשים מחליפים מסנן כל כמה חודשים ומברשות כשיש שחיקה. כדאי לוודא שיש חלקי חילוף זמינים לפני קנייה." },
+  { q: "איך לבחור בין לייזר (LiDAR) למצלמה בדירה קטנה?", a: "לייזר נותן מיפוי מדויק, אבל לפעמים מוסיף גובה. מצלמה/זיהוי מכשולים טובים במיוחד כשיש כבלים וחפצים קטנים. בדירה קטנה זה לרוב חשוב יותר מ'עוד דיוק' במפה." }
 ];
 
 export default function FAQPage() {
-  // Generate JSON-LD Schema
-  const schema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": faqs.map(faq => ({
-      "@type": "Question",
-      "name": faq.q,
-      "acceptedAnswer": {
-        "@type": "Answer",
-        "text": faq.a
-      }
-    }))
-  };
-
   return (
-    <div className="min-h-screen bg-stone-50 py-16">
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
+    <main className="max-w-3xl mx-auto px-4 py-16 bg-page">
+      <h1 className="text-4xl font-bold mb-8 text-center text-main">שאלות נפוצות על רובוט שואב שוטף לדירה קטנה</h1>
       
-      <div className="max-w-3xl mx-auto px-4">
-        <h1 className="text-4xl font-extrabold text-center text-stone-900 mb-12">שאלות נפוצות</h1>
-        
-        <div className="space-y-4">
-          {faqs.map((faq, idx) => (
-            <details key={idx} className="group bg-white rounded-2xl border border-stone-200 open:border-amber-400 open:ring-1 open:ring-amber-100 transition-all duration-300">
-              <summary className="flex items-center justify-between p-6 cursor-pointer list-none">
-                <h3 className="font-bold text-lg text-stone-800 group-hover:text-amber-700 transition flex gap-3">
-                  <HelpCircle className="text-amber-500 w-6 h-6 shrink-0" />
-                  {faq.q}
-                </h3>
-                <ChevronDown className="text-stone-400 group-open:rotate-180 transition-transform duration-300" />
-              </summary>
-              <div className="px-6 pb-6 pt-0 text-stone-600 leading-relaxed border-t border-transparent group-open:border-stone-100 group-open:pt-4 ml-8">
-                {faq.a}
-              </div>
-            </details>
-          ))}
+      <div className="space-y-4">
+        {faqs.map((faq, index) => (
+          <details key={index} className="group bg-surface border border-soft rounded-2xl overflow-hidden shadow-sm">
+            <summary className="flex justify-between items-center p-6 cursor-pointer font-bold text-main list-none">
+              <span>{faq.q}</span>
+              <span className="transition-transform group-open:rotate-180">▼</span>
+            </summary>
+            <div className="px-6 pb-6 text-muted leading-relaxed font-medium">
+              {faq.a}
+            </div>
+          </details>
+        ))}
+      </div>
+
+      <div className="mt-10 text-center text-sm text-muted">
+        <div className="font-bold text-main mb-2">רוצים להעמיק?</div>
+        <div className="flex flex-col sm:flex-row gap-3 justify-center">
+          <Link href="/guide" className="font-bold hover:underline text-[rgb(var(--accent-hover-rgb))]">
+            מדריך קנייה
+          </Link>
+          <Link href="/compare" className="font-bold hover:underline text-[rgb(var(--accent-hover-rgb))]">
+            השוואת דגמים
+          </Link>
+          <Link href="/article" className="font-bold hover:underline text-[rgb(var(--accent-hover-rgb))]">
+            מאמר עומק
+          </Link>
         </div>
       </div>
-    </div>
+
+      {/* Structured Data for SEO */}
+      <SeoJsonLd
+        data={{
+          '@context': 'https://schema.org',
+          '@type': 'FAQPage',
+          mainEntity: faqs.map((f) => ({
+            '@type': 'Question',
+            name: f.q,
+            acceptedAnswer: { '@type': 'Answer', text: f.a },
+          })),
+        }}
+      />
+    </main>
   );
 }

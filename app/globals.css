@@ -1,26 +1,107 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+  /* Design Tokens (Warm Buying Guide Theme) */
+  --bg-rgb: 252, 248, 240; /* שמנת */
+  --surface-rgb: 253, 250, 244; /* בז' בהיר */
+  --surface-alt-rgb: 250, 244, 232; /* בז' מעט כהה יותר */
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  --text-rgb: 52, 44, 40; /* פחם חם */
+  --muted-rgb: 109, 96, 88; /* חום רך */
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --border-rgb: 232, 220, 206; /* border עדין */
+
+  --accent-rgb: 126, 164, 180; /* תכלת מעושן */
+  --accent-hover-rgb: 102, 140, 156;
+
+  --accent-warm-rgb: 170, 122, 92; /* חום עדין */
+  --accent-warm-hover-rgb: 152, 105, 76;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  color: rgb(var(--text-rgb));
+  background: linear-gradient(
+    to bottom,
+    rgb(var(--bg-rgb)),
+    rgb(var(--surface-rgb))
+  );
+  direction: rtl;
+  overflow-x: hidden;
+  @apply antialiased;
+}
+
+/* הגדרות כותרות */
+h1, h2, h3, h4, h5, h6 {
+  color: rgb(var(--text-rgb));
+  @apply tracking-tight font-black;
+}
+
+h1 { @apply leading-[1.1]; }
+h2 { @apply leading-tight; }
+
+/* Utility classes that use tokens */
+.bg-page { background: rgb(var(--bg-rgb)); }
+.bg-surface { background: rgb(var(--surface-rgb)); }
+.bg-surface-alt { background: rgb(var(--surface-alt-rgb)); }
+.text-main { color: rgb(var(--text-rgb)); }
+.text-muted { color: rgb(var(--muted-rgb)); }
+.border-soft { border-color: rgb(var(--border-rgb)); }
+
+/* רכיבים מותאמים אישית */
+.btn-primary {
+  @apply px-8 py-4 rounded-full font-bold transition-all hover:shadow-xl active:scale-95 flex items-center justify-center gap-2 cursor-pointer shadow-sm;
+  background: rgb(var(--accent-rgb));
+  color: white;
+}
+.btn-primary:hover {
+  background: rgb(var(--accent-hover-rgb));
+}
+
+.btn-secondary {
+  @apply px-8 py-4 rounded-full font-bold transition-all hover:shadow-lg active:scale-95 flex items-center justify-center gap-2 cursor-pointer shadow-sm border;
+  background: rgb(var(--surface-rgb));
+  color: rgb(var(--text-rgb));
+  border-color: rgb(var(--border-rgb));
+}
+.btn-secondary:hover { background: rgb(var(--surface-alt-rgb)); }
+
+.btn-accent {
+  @apply px-8 py-4 rounded-full font-bold transition-all hover:shadow-xl active:scale-95 flex items-center justify-center gap-2 cursor-pointer shadow-sm;
+  background: rgb(var(--accent-warm-rgb));
+  color: white;
+}
+.btn-accent:hover {
+  background: rgb(var(--accent-warm-hover-rgb));
+}
+
+.card-premium {
+  @apply rounded-[2rem] border shadow-sm hover:shadow-xl transition-all duration-500;
+  background: rgb(var(--surface-rgb));
+  border-color: rgb(var(--border-rgb));
+}
+
+.text-body {
+  color: rgb(var(--muted-rgb));
+  @apply leading-relaxed text-lg;
+}
+
+.container-custom {
+  @apply max-w-6xl mx-auto px-4;
+}
+
+/* Badges */
+.badge-neutral {
+  background: rgba(var(--text-rgb), 0.06);
+  color: rgb(var(--text-rgb));
+  border: 1px solid rgba(var(--text-rgb), 0.10);
+}
+.badge-accent {
+  background: rgba(var(--accent-rgb), 0.16);
+  color: rgb(var(--accent-hover-rgb));
+  border: 1px solid rgba(var(--accent-rgb), 0.22);
+}
+.badge-warm {
+  background: rgba(var(--accent-warm-rgb), 0.18);
+  color: rgb(var(--accent-warm-hover-rgb));
+  border: 1px solid rgba(var(--accent-warm-rgb), 0.24);
 }

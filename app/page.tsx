@@ -1,408 +1,333 @@
-import React from 'react';
-import { Metadata } from 'next';
-import { Check, Info, Star, ChevronDown, Map, Battery, Volume2, HelpCircle } from 'lucide-react';
+import Link from 'next/link';
+import { ArrowLeft, Zap, Volume2, Maximize2, AlertTriangle, CheckCircle2, Ruler, Wifi, Battery, Droplets } from 'lucide-react';
+import { robots } from './data';
+import { pageMetadata } from './lib/seo';
+import AffiliateLink from './components/AffiliateLink';
+import SectionHeader from './components/ui/SectionHeader';
+import Card from './components/ui/Card';
+import Badge from './components/ui/Badge';
+import CTAButton from './components/ui/CTAButton';
+import AffiliateDisclosure from './components/ui/AffiliateDisclosure';
+import Image from 'next/image';
 
-// 1. SEO Metadata
-export const metadata: Metadata = {
-  title: 'רובוט שואב שוטף מומלץ לשימוש בדירה קטנה | המדריך המלא 2024',
-  description: 'מחפשים רובוט שואב שוטף לדירה קטנה? הכנסו למדריך המקיף: השוואת דגמים, המלצות לחיסכון במקום, עוצמת שאיבה וטיפים לתחזוקה קלה.',
-};
+export const metadata = pageMetadata({
+  title: 'רובוט שואב שוטף מומלץ לשימוש בדירה קטנה (2026)',
+  description:
+    'מחפשים רובוט שואב שוטף מומלץ לשימוש בדירה קטנה? מדריך ברור: מה חשוב לבדוק (גובה, רעש, ניווט), אילו דגמים שווים, וקישורים להשוואה ומדריך קנייה.',
+  path: '/',
+});
 
 export default function Home() {
-  
-  // 2. FAQ Schema for Google (JSON-LD) - Updated with new questions
-  const faqSchema = {
-    "@context": "https://schema.org",
-    "@type": "FAQPage",
-    "mainEntity": [
-      {
-        "@type": "Question",
-        "name": "מה ההבדל בין רובוט שואב לרובוט שואב-שוטף?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "רובוט שואב רק יונק אבק ולכלוך יבש. רובוט שואב-שוטף (היברידי) כולל גם מיכל מים ומטלית, ומסוגל לבצע שאיבה וניגוב בפעולה אחת - יתרון משמעותי לחיסכון בזמן ומקום בדירות קטנות."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "מה גודל הדירה המינימלי לשימוש ברובוט שואב-שוטף?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "אין גודל מינימלי, אך בדירות סטודיו או דירות מתחת ל-40 מ\"ר חשוב לוודא שיש מספיק מרווח פנוי על הרצפה לתנועת הרובוט. רובוטים מודרניים יודעים לנקות ביעילות גם חללים קטנים ומורכבים."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "האם רובוט שואב-שוטף מתאים לשטיחים?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "כן, אך תלוי בדגם. רוב הרובוטים המתקדמים מזהים שטיחים אוטומטית ומגבירים את עוצמת השאיבה. דגמים משוכללים יותר יודעים להרים את המטלית כשהם עולים על שטיח כדי לא להרטיב אותו."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "מה חשוב לבדוק לפני קנייה של רובוט לדירה קטנה?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "שלושת הדברים הקריטיים: 1. גובה הרובוט (כדי שייכנס מתחת לרהיטים). 2. מערכת ניווט חכמה (לייזר/מצלמה) למניעת היתקעות. 3. גודל עמדת הטעינה (כדי שלא תתפוס מקום יקר)."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "האם תחנת ריקון אוטומטית שווה את ההשקעה?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "בדירות קטנות שבהן האבק מצטבר מהר, זהו שדרוג משמעותי שחוסך התעסקות יומיומית. עם זאת, התחנה תופסת מקום, אז יש לוודא שיש לכם נישה מתאימה עבורה."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "כמה זמן לוקח לרובוט לנקות דירה קטנה?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "בדירה ממוצעת של 50-60 מ\"ר, ניקוי יסודי אורך בדרך כלל בין 30 ל-45 דקות, תלוי בכמות המכשולים ובעוצמת השאיבה שנבחרה."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "איך לתחזק רובוט שואב-שוטף?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "תחזוקה בסיסית כוללת: ריקון מיכל האבק (אם אין עמדה), שטיפת המטלית לאחר כל שימוש, ניקוי השערות מהמברשת הראשית פעם בשבוע, וניגוב החיישנים מאבק אחת לחודש."
-        }
-      },
-      {
-        "@type": "Question",
-        "name": "האם רובוט שואב-שוטף בטוח לחיות מחמד?",
-        "acceptedAnswer": {
-          "@type": "Answer",
-          "text": "כן, בדרך כלל חיות מחמד מתרגלות אליו מהר. אם יש לכם גורים או חיות חששניות, מומלץ לבחור ברובוט שקט במיוחד ולהפעיל אותו בהתחלה כשהם בחדר אחר."
-        }
-      }
-    ]
-  };
+  const featuredRobots = robots.slice(0, 3);
+  const formatStars = (v: number) => (Number.isInteger(v) ? v.toFixed(0) : v.toFixed(1));
 
   return (
-    <div dir="rtl" className="font-sans text-stone-800 bg-stone-50 min-h-screen">
-      {/* Inject Schema into Head */}
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
-      />
-
-      {/* --- Header --- */}
-      <nav className="bg-white/90 backdrop-blur-md shadow-sm sticky top-0 z-50 border-b border-stone-100">
-        <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-          <div className="font-bold text-xl text-amber-700 flex items-center gap-2">
-            <span className="bg-amber-100 p-1 rounded-lg">🤖</span>
-            רובוט.פרו
-          </div>
-          <div className="hidden md:flex space-x-reverse space-x-8">
-            <a href="#" className="text-stone-600 hover:text-amber-700 font-medium transition">בית</a>
-            <a href="#guide" className="text-stone-600 hover:text-amber-700 font-medium transition">מדריך קנייה</a>
-            <a href="#comparison" className="text-stone-600 hover:text-amber-700 font-medium transition">השוואת דגמים</a>
-            <a href="#faq" className="text-stone-600 hover:text-amber-700 font-medium transition">שאלות נפוצות</a>
-          </div>
-          <button className="bg-amber-700 text-white px-5 py-2 rounded-full font-medium hover:bg-amber-800 transition shadow-md hover:shadow-lg transform hover:-translate-y-0.5 duration-200">
-            הדגמים המומלצים
-          </button>
-        </div>
-      </nav>
-
-      {/* --- Hero Section (Updated Size & Colors) --- */}
-      <header className="relative bg-white pt-12 pb-24 overflow-hidden">
-        {/* Background blobs */}
-        <div className="absolute top-0 right-0 w-64 h-64 bg-amber-100 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob"></div>
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-orange-100 rounded-full mix-blend-multiply filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
-
-        <div className="max-w-7xl mx-auto px-4 grid lg:grid-cols-12 gap-12 items-center">
+    <main className="min-h-screen" dir="rtl">
+      {/* Hero Section */}
+      <section className="relative pt-12 pb-20 md:pt-20 md:pb-32 px-4 bg-page overflow-hidden">
+        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center relative z-10">
           
-          {/* Hero Text (Less width) */}
-          <div className="text-right z-10 lg:col-span-5">
-            <span className="inline-block bg-amber-100 text-amber-900 px-4 py-1.5 rounded-full text-sm font-bold mb-6 border border-amber-200">
-              🍂 מדריך חורף 2024
-            </span>
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight mb-6 text-stone-900 tracking-tight">
-              רובוט שואב שוטף <span className="text-amber-700">מומלץ</span> לשימוש בדירה קטנה
+          {/* Text Content */}
+          <div className="text-center md:text-right space-y-6">
+            <div className="inline-flex justify-center md:justify-start">
+              <Badge>מעודכן ל‑2026</Badge>
+            </div>
+            <h1 className="text-4xl md:text-6xl font-extrabold text-main leading-tight">
+              רובוט שואב שוטף מומלץ לשימוש בדירה קטנה
             </h1>
-            <p className="text-lg text-stone-600 mb-8 leading-relaxed">
-              המדריך המלא לחיים קלים יותר. השוואה מקיפה, המלצות אובייקטיביות וטיפים לניקיון חכם בדירות עד 60 מ"ר.
+            <p className="text-lg md:text-xl text-muted max-w-lg mx-auto md:mx-0 font-medium leading-relaxed">
+              מדריך קנייה ממוקד לדירות קטנות: בוחרים נכון לפי גובה, שקט, ניווט ומקום לתחנה — ומונעים אכזבות אחרי הרכישה.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <a href="#guide" className="bg-amber-700 text-white px-8 py-4 rounded-xl font-bold text-center hover:bg-amber-800 transition shadow-lg hover:shadow-amber-200/50">
-                למדריך הקנייה
-              </a>
-              <a href="#comparison" className="bg-white text-amber-700 border-2 border-amber-700 px-8 py-4 rounded-xl font-bold text-center hover:bg-amber-50 transition">
-                להשוואת דגמים
-              </a>
+
+            {/* Benefits (Checkmarks) */}
+            <div className="flex flex-col sm:flex-row gap-3 justify-center md:justify-start pt-2 flex-wrap">
+              {[
+                'חיסכון בזמן ניקיון שבועי',
+                'מתאים לחללים קטנים וצפופים',
+                'עובד בשקט — גם כשאתם בבית',
+                'בחירה שקופה לפי קריטריונים',
+              ].map((benefit) => (
+                <div
+                  key={benefit}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-surface border border-soft text-sm font-bold text-main shadow-sm"
+                >
+                  <span className="text-[rgb(var(--accent-rgb))]">✓</span>
+                  {benefit}
+                </div>
+              ))}
+            </div>
+            
+            <div className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start pt-4">
+              <Link href="/guide" className="btn-primary flex items-center gap-2">
+                למדריך הקנייה <ArrowLeft size={18} />
+              </Link>
+              <Link href="#compare" className="btn-secondary">
+                השוואת דגמים
+              </Link>
+            </div>
+            <div className="pt-2">
+              <div className="flex flex-col gap-1">
+                <Link href="/article" className="text-sm text-muted underline hover:opacity-80">
+                  או קרא את המאמר המלא
+                </Link>
+                <Link href="/faq" className="text-sm text-muted underline hover:opacity-80">
+                  שאלות נפוצות לפני שקונים
+                </Link>
+                <Link href="/sources" className="text-sm text-muted underline hover:opacity-80">
+                  מקורות וקישורים
+                </Link>
+              </div>
             </div>
           </div>
 
-          {/* Hero Video (More width - Enlarged) */}
-          <div className="relative lg:col-span-7">
-            <div className="absolute -inset-2 bg-gradient-to-tr from-amber-200 to-orange-100 rounded-[2rem] blur-lg opacity-60"></div>
-            <div className="relative bg-black rounded-[1.5rem] overflow-hidden shadow-2xl aspect-video border-4 border-white transform transition hover:scale-[1.01] duration-500">
-              <video 
-                className="w-full h-full object-cover"
-                autoPlay 
-                muted 
-                loop 
-                playsInline
-                poster="/images/video-placeholder.jpg"
-              >
-                <source src="/robot-hero.mp4" type="video/mp4" />
-                הדפדפן שלך לא תומך בוידאו.
-              </video>
-              
-              {/* Floating Badge */}
-              <div className="absolute bottom-6 right-6 bg-white/95 backdrop-blur px-5 py-3 rounded-xl shadow-xl border border-stone-100 flex items-center gap-3 animate-fade-in-up">
-                <div className="bg-green-100 p-2 rounded-full">
-                  <Check className="text-green-700 w-5 h-5" />
+          {/* Video Card */}
+          <div className="relative w-full aspect-video md:aspect-square bg-surface-alt rounded-3xl overflow-hidden shadow-2xl border-8 border-white/70 transform rotate-1 hover:rotate-0 transition-transform duration-700">
+            <video 
+              className="w-full h-full object-cover scale-105"
+              autoPlay 
+              muted 
+              loop 
+              playsInline
+            >
+              {/* התיקון המרכזי לנתיב הווידאו */}
+              <source src="/videos/robot-hero.mp4" type="video/mp4" />
+              הדפדפן שלך לא תומך בהצגת וידאו.
+            </video>
+          </div>
+        </div>
+        
+        <div className="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-l from-[rgba(var(--accent-rgb),0.12)] to-transparent -z-0 opacity-60 pointer-events-none" />
+      </section>
+
+      {/* 3 Things to Check - REDESIGNED */}
+      <section className="py-24 bg-page">
+        <div className="container-custom">
+          <SectionHeader 
+            title="למה דירה קטנה דורשת בחירה אחרת?"
+            subtitle="בחלל צפוף, המפרט הטכני היבש לא מספר את כל הסיפור. הנה 3 הקריטריונים הקריטיים שחייבים לבדוק."
+          />
+          <div className="grid md:grid-cols-3 gap-8">
+            <Card className="text-center border-soft hover:shadow-md">
+              <div className="bg-[rgba(var(--accent-rgb),0.12)] w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-soft">
+                <Ruler className="text-[rgb(var(--accent-hover-rgb))]" size={32} />
+              </div>
+              <h3 className="text-xl font-bold mb-4">גובה הרובוט</h3>
+              <p className="text-muted leading-relaxed">
+                בדירות קטנות, הרובוט חייב להיכנס מתחת לספה ולמיטה. חפשו דגמים מתחת ל-9.7 ס״מ כדי שלא יישארו שטחים מתים.
+              </p>
+            </Card>
+            <Card className="text-center border-soft hover:shadow-md">
+              <div className="bg-[rgba(var(--accent-rgb),0.12)] w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-soft">
+                <Volume2 className="text-[rgb(var(--accent-hover-rgb))]" size={32} />
+              </div>
+              <h3 className="text-xl font-bold mb-4">רמת רעש (dB)</h3>
+              <p className="text-muted leading-relaxed">
+                בחלל קטן הרעש מורגש הרבה יותר. ודאו שהרובוט שקט (פחות מ-62dB) כדי שתוכלו לנהל שיחה או לצפות בטלוויזיה.
+              </p>
+            </Card>
+            <Card className="text-center border-soft hover:shadow-md">
+              <div className="bg-[rgba(var(--accent-rgb),0.12)] w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-soft">
+                <Zap className="text-[rgb(var(--accent-hover-rgb))]" size={32} />
+              </div>
+              <h3 className="text-xl font-bold mb-4">מיפוי וניווט חכם</h3>
+              <p className="text-muted leading-relaxed">
+                חובה זיהוי מכשולים מתקדם (AI או לייזר) כדי שהרובוט לא ייתקע בגרביים, כבלים או רגלי כיסאות צפופות.
+              </p>
+            </Card>
+          </div>
+        </div>
+      </section>
+
+      {/* Main Criteria Grid - NEW */}
+      <section className="py-24 bg-page">
+        <div className="container-custom">
+          <SectionHeader 
+            title="קריטריונים מרכזיים לבחירה"
+            subtitle="שישה גורמים שחייבים לבדוק לפני רכישת רובוט שואב-שוטף לדירה קטנה"
+          />
+          <div className="grid md:grid-cols-3 gap-6">
+            {[
+              { icon: <Ruler size={24}/>, title: "גובה הרובוט", desc: "הקריטריון החשוב ביותר לדירה קטנה. מדדו את הגובה מתחת לספה." },
+              { icon: <Wifi size={24}/>, title: "טכנולוגיית מיפוי", desc: "מיפוי לייזר (LiDAR) הוא המדויק ביותר לניווט חכם." },
+              { icon: <Volume2 size={24}/>, title: "רמת רעש", desc: "בדירה קטנה הרעש מורגש יותר. חפשו מצב שקט ייעודי." },
+              { icon: <Droplets size={24}/>, title: "מיכל מים ושטיפה", desc: "בדקו אם יש ויסות אוטומטי של המים למניעת רטיבות יתר." },
+              { icon: <Battery size={24}/>, title: "סוללה וזמן עבודה", desc: "לדירה קטנה מספיקה סוללה סטנדרטית (60-90 דקות)." },
+              { icon: <Maximize2 size={24}/>, title: "תחנת ריקון", desc: "נוחות מקסימלית אך תופסת מקום. שקלו אם יש לכם פינה עבורה." },
+            ].map((item, i) => (
+              <div key={i} className="flex gap-4 p-6 bg-surface rounded-2xl border border-soft shadow-sm">
+                <div className="bg-[rgba(var(--accent-rgb),0.12)] p-3 rounded-xl h-fit text-[rgb(var(--accent-hover-rgb))] border border-soft">
+                  {item.icon}
                 </div>
                 <div>
-                  <p className="text-xs text-stone-500 font-semibold uppercase tracking-wider">נבדק ואושר</p>
-                  <p className="font-bold text-stone-800">מותאם לדירות קטנות</p>
+                  <h4 className="font-bold text-main mb-1">{item.title}</h4>
+                  <p className="text-sm text-muted">{item.desc}</p>
                 </div>
               </div>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* --- Key Features Section --- */}
-      <section className="py-20 bg-stone-50" id="guide">
-        <div className="max-w-6xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-stone-900 mb-4">שלושה דברים שחייבים לבדוק</h2>
-            <div className="w-24 h-1.5 bg-amber-600 mx-auto rounded-full"></div>
-          </div>
-          
-          <div className="grid md:grid-cols-3 gap-8">
-            {/* Feature 1 */}
-            <div className="bg-white p-8 rounded-2xl border border-stone-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300">
-              <div className="bg-amber-100 w-16 h-16 rounded-2xl flex items-center justify-center mb-6 rotate-3">
-                <Map className="text-amber-700 w-8 h-8" />
-              </div>
-              <h3 className="text-xl font-bold mb-3 text-stone-800">מיפוי לייזר (Lidar)</h3>
-              <p className="text-stone-600 leading-relaxed">
-                בדירה קטנה עם הרבה רהיטים, רובוט בלי מיפוי חכם פשוט ילך לאיבוד. אל תתפשרו על ניווט מבוסס לייזר או מצלמה שיודע למפות את החלל.
-              </p>
-            </div>
-             {/* Feature 2 */}
-             <div className="bg-white p-8 rounded-2xl border border-stone-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300">
-              <div className="bg-orange-100 w-16 h-16 rounded-2xl flex items-center justify-center mb-6 -rotate-2">
-                <Battery className="text-orange-700 w-8 h-8" />
-              </div>
-              <h3 className="text-xl font-bold mb-3 text-stone-800">תחנת עגינה קומפקטית</h3>
-              <p className="text-stone-600 leading-relaxed">
-                מקום הוא מצרך נדיר. חפשו דגמים עם תחנת ריקון צרה ואסתטית שמשתלבת בעיצוב הבית ולא תופסת חצי סלון.
-              </p>
-            </div>
-             {/* Feature 3 */}
-             <div className="bg-white p-8 rounded-2xl border border-stone-100 shadow-sm hover:shadow-xl hover:-translate-y-1 transition duration-300">
-              <div className="bg-stone-200 w-16 h-16 rounded-2xl flex items-center justify-center mb-6 rotate-1">
-                <Volume2 className="text-stone-700 w-8 h-8" />
-              </div>
-              <h3 className="text-xl font-bold mb-3 text-stone-800">עוצמת שאיבה ושקט</h3>
-              <p className="text-stone-600 leading-relaxed">
-                בחלל קטן הרעש מורגש יותר. מומלץ לבחור רובוט עם מנוע שקט (מתחת ל-65dB) שמאפשר לכם להיות בבית בזמן שהוא עובד.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* --- Recommendations Section --- */}
-      <section className="py-20 bg-white" id="recommendations">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="text-center mb-16">
-            <span className="text-amber-600 font-bold tracking-wide uppercase text-sm">הבחירות שלנו</span>
-            <h2 className="text-3xl md:text-4xl font-bold text-stone-900 mt-2 mb-6">המלצות מובילות לדירות קטנות</h2>
-            <p className="text-stone-600 max-w-2xl mx-auto text-lg">
-              אחרי בדיקה של עשרות דגמים, סיננו עבורכם את השלושה המשתלמים ביותר שמתאימים במיוחד לחללים אורבניים.
-            </p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {/* Product 1 */}
-            <div className="group bg-stone-50 rounded-3xl overflow-hidden border border-stone-100 hover:border-amber-200 transition duration-300 flex flex-col">
-              <div className="h-56 bg-white relative overflow-hidden">
-                <div className="absolute inset-0 bg-stone-100 flex items-center justify-center text-stone-400 group-hover:scale-105 transition duration-500">
-                  {/* PLACEHOLDER */}
-                  <span className="text-4xl opacity-20">🖼️</span>
-                </div>
-                <div className="absolute top-4 right-4 bg-amber-400 text-amber-900 text-xs font-bold px-3 py-1.5 rounded-full shadow-sm">המשתלם ביותר</div>
-              </div>
-              <div className="p-8 flex-1 flex flex-col">
-                <h3 className="text-2xl font-bold mb-2 text-stone-800">Xiaomi Robot Vacuum S10</h3>
-                <p className="text-stone-500 text-sm mb-6">הפתרון האידיאלי לתקציב נמוך ולדירות סטודיו. קטן, חכם ועושה את העבודה.</p>
-                <div className="space-y-3 mb-8 flex-1">
-                  <div className="flex items-center gap-3 text-sm text-stone-700">
-                    <div className="bg-green-100 p-1 rounded-full"><Check className="w-3 h-3 text-green-600"/></div>
-                    מיפוי לייזר מדויק
-                  </div>
-                  <div className="flex items-center gap-3 text-sm text-stone-700">
-                    <div className="bg-green-100 p-1 rounded-full"><Check className="w-3 h-3 text-green-600"/></div>
-                    שאיבה חזקה 4000Pa
-                  </div>
-                  <div className="flex items-center gap-3 text-sm text-stone-700">
-                    <div className="bg-green-100 p-1 rounded-full"><Check className="w-3 h-3 text-green-600"/></div>
-                    עיצוב מינימליסטי
-                  </div>
-                </div>
-                <a 
-                  href="#" 
-                  className="w-full bg-stone-800 text-white py-4 rounded-xl font-bold text-center hover:bg-stone-900 transition flex items-center justify-center gap-2 shadow-lg shadow-stone-200"
-                >
-                  לצפייה במחיר באלי אקספרס
-                </a>
-              </div>
-            </div>
-
-            {/* Product 2 (Highlighted) */}
-            <div className="group bg-white rounded-3xl overflow-hidden border-2 border-amber-500 shadow-2xl shadow-amber-100/50 relative transform md:-translate-y-6 flex flex-col">
-              <div className="absolute top-0 inset-x-0 bg-amber-500 text-white text-center text-sm font-bold py-1.5 tracking-wide">🏆 הבחירה המומלצת</div>
-              <div className="h-64 bg-stone-100 relative mt-8 overflow-hidden">
-                 <div className="absolute inset-0 bg-stone-50 flex items-center justify-center text-stone-400 group-hover:scale-105 transition duration-500">
-                   {/* PLACEHOLDER */}
-                   <span className="text-5xl opacity-20">🖼️</span>
-                </div>
-              </div>
-              <div className="p-8 flex-1 flex flex-col">
-                <h3 className="text-2xl font-bold mb-2 text-stone-900">Roborock Q7 Max</h3>
-                <p className="text-stone-500 text-sm mb-6">סוס עבודה אמין. שוטף ושואב בו זמנית עם אפליקציה מושלמת בעברית.</p>
-                <div className="space-y-3 mb-8 flex-1">
-                  <div className="flex items-center gap-3 text-sm text-stone-700 font-medium">
-                    <div className="bg-amber-100 p-1 rounded-full"><Check className="w-3 h-3 text-amber-700"/></div>
-                    מיכל מים משולב חכם
-                  </div>
-                  <div className="flex items-center gap-3 text-sm text-stone-700 font-medium">
-                    <div className="bg-amber-100 p-1 rounded-full"><Check className="w-3 h-3 text-amber-700"/></div>
-                    ניווט LiDAR מתקדם
-                  </div>
-                  <div className="flex items-center gap-3 text-sm text-stone-700 font-medium">
-                    <div className="bg-amber-100 p-1 rounded-full"><Check className="w-3 h-3 text-amber-700"/></div>
-                    עוצמת שאיבה אדירה
-                  </div>
-                </div>
-                <a 
-                  href="#" 
-                  className="w-full bg-amber-600 text-white py-4 rounded-xl font-bold text-center hover:bg-amber-700 transition flex items-center justify-center gap-2 shadow-xl shadow-amber-200"
-                >
-                  לצפייה במחיר באלי אקספרס
-                </a>
-              </div>
-            </div>
-
-            {/* Product 3 */}
-            <div className="group bg-stone-50 rounded-3xl overflow-hidden border border-stone-100 hover:border-amber-200 transition duration-300 flex flex-col">
-              <div className="h-56 bg-white relative overflow-hidden">
-                 <div className="absolute inset-0 bg-stone-100 flex items-center justify-center text-stone-400 group-hover:scale-105 transition duration-500">
-                   {/* PLACEHOLDER */}
-                   <span className="text-4xl opacity-20">🖼️</span>
-                </div>
-                <div className="absolute top-4 right-4 bg-stone-800 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-sm">פרימיום</div>
-              </div>
-              <div className="p-8 flex-1 flex flex-col">
-                <h3 className="text-2xl font-bold mb-2 text-stone-800">Dreame L10s Pro</h3>
-                <p className="text-stone-500 text-sm mb-6">מערכת AI לזיהוי מכשולים - מושלם לבתים עם ילדים או בלאגן.</p>
-                <div className="space-y-3 mb-8 flex-1">
-                  <div className="flex items-center gap-3 text-sm text-stone-700">
-                    <div className="bg-green-100 p-1 rounded-full"><Check className="w-3 h-3 text-green-600"/></div>
-                    זיהוי גרביים וכבלים
-                  </div>
-                  <div className="flex items-center gap-3 text-sm text-stone-700">
-                    <div className="bg-green-100 p-1 rounded-full"><Check className="w-3 h-3 text-green-600"/></div>
-                    זוג מגבים מסתובבים (שפשוף)
-                  </div>
-                  <div className="flex items-center gap-3 text-sm text-stone-700">
-                    <div className="bg-green-100 p-1 rounded-full"><Check className="w-3 h-3 text-green-600"/></div>
-                    הרמת מקרצפות על שטיח
-                  </div>
-                </div>
-                <a 
-                  href="#" 
-                  className="w-full bg-stone-800 text-white py-4 rounded-xl font-bold text-center hover:bg-stone-900 transition flex items-center justify-center gap-2 shadow-lg shadow-stone-200"
-                >
-                  לצפייה במחיר באלי אקספרס
-                </a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* --- FAQ Section (Updated Content & Style) --- */}
-      <section className="py-20 bg-amber-50" id="faq">
-        <div className="max-w-4xl mx-auto px-4">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-stone-900 mb-4">שאלות נפוצות</h2>
-            <p className="text-stone-600">כל מה שצריך לדעת לפני שבוחרים את העוזר החדש שלכם</p>
-          </div>
-          
-          <div className="space-y-4">
-            {/* Loop through schema to generate UI automatically or manual layout */}
-            {faqSchema.mainEntity.map((item, index) => (
-              <details key={index} className="group bg-white rounded-2xl border border-stone-200 shadow-sm open:ring-2 open:ring-amber-100 open:border-amber-300 transition-all duration-200">
-                <summary className="flex items-center justify-between p-6 font-bold cursor-pointer list-none text-lg text-stone-800 hover:text-amber-700 transition">
-                  <div className="flex items-center gap-4">
-                    <HelpCircle className="w-5 h-5 text-amber-500" />
-                    {item.name}
-                  </div>
-                  <ChevronDown className="w-5 h-5 transition-transform group-open:rotate-180 text-stone-400" />
-                </summary>
-                <div className="px-6 pb-6 pt-0 mr-9 text-stone-600 leading-relaxed border-t border-transparent group-open:border-stone-100 group-open:pt-4">
-                  {item.acceptedAnswer.text}
-                </div>
-              </details>
             ))}
           </div>
         </div>
       </section>
 
-      {/* --- Footer --- */}
-      <footer className="bg-stone-900 text-stone-400 py-16">
-        <div className="max-w-7xl mx-auto px-4 grid md:grid-cols-4 gap-12 text-sm border-b border-stone-800 pb-12 mb-12">
-          <div className="col-span-1 md:col-span-1">
-            <h4 className="text-white font-bold text-xl mb-6 flex items-center gap-2">
-              <span className="text-2xl">🤖</span> רובוט.פרו
-            </h4>
-            <p className="leading-relaxed mb-6">
-              המדריך המקצועי והאובייקטיבי לבחירת שואב רובוטי שוטף לדירות בישראל. אנחנו כאן כדי לעזור לכם לחסוך זמן וכסף.
-            </p>
+      {/* Common Mistakes - NEW */}
+      <section className="py-24 bg-page">
+        <div className="container-custom">
+          <div className="max-w-4xl mx-auto">
+            <div className="flex items-center gap-4 mb-12 justify-center">
+              <div className="bg-red-50 p-3 rounded-2xl text-red-600">
+                <AlertTriangle size={32} />
+              </div>
+              <h2 className="text-3xl md:text-4xl font-extrabold text-main tracking-tight">טעויות נפוצות בקנייה</h2>
+            </div>
+            <div className="space-y-4">
+              {[
+                { m: "קניית רובוט גבוה מדי", f: "מדדו את הגובה מתחת לרהיטים לפני הקנייה" },
+                { m: "התעלמות מרמת הרעש", f: "קראו ביקורות על רמת הרעש בפועל" },
+                { m: "בחירה לפי מחיר בלבד", f: "השוו תכונות ולא רק מחיר" },
+                { m: "התעלמות מסוג הרצפות", f: "ודאו התאמה לפרקט/אריחים/שטיחים" },
+                { m: "שכחה לבדוק חלקי חילוף", f: "ודאו זמינות של מסננים ומברשות" },
+                { m: "התעלמות מאפליקציה ושירות", f: "בדקו שהאפליקציה בעברית ויש שירות מקומי" },
+              ].map((item, i) => (
+                <div key={i} className="grid md:grid-cols-2 gap-4 items-center">
+                  <div className="bg-red-50/50 p-4 rounded-xl border border-red-100 text-red-800 font-medium flex items-center gap-3">
+                    <span className="w-6 h-6 rounded-full bg-red-100 text-red-600 flex items-center justify-center text-xs">✕</span>
+                    {item.m}
+                  </div>
+                  <div className="bg-[rgba(var(--accent-rgb),0.10)] p-4 rounded-xl border border-soft text-[rgb(var(--accent-hover-rgb))] font-medium flex items-center gap-3">
+                    <span className="w-6 h-6 rounded-full bg-[rgba(var(--accent-rgb),0.18)] text-[rgb(var(--accent-hover-rgb))] flex items-center justify-center text-xs font-bold">✓</span>
+                    {item.f}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Recommended Models */}
+      <section className="py-24 bg-page" id="compare">
+        <div className="container-custom">
+          <div className="flex flex-col md:flex-row justify-between items-center md:items-end mb-12 gap-6 text-center md:text-right">
+            <SectionHeader 
+              title="הדגמים המומלצים לדירה קטנה"
+              subtitle="בחרנו עבורכם את הרובוטים המצטיינים בשילוב של גובה נמוך, שקט וניווט חכם."
+              centered={false}
+              className="mb-0"
+            />
+            <CTAButton href="/compare" variant="secondary">
+              לכל ההשוואות ←
+            </CTAButton>
           </div>
           
-          <div>
-            <h4 className="text-white font-bold text-lg mb-6">ניווט מהיר</h4>
-            <ul className="space-y-4">
-              <li><a href="#" className="hover:text-amber-500 transition flex items-center gap-2"><span className="w-1 h-1 bg-amber-500 rounded-full"></span> דף הבית</a></li>
-              <li><a href="#guide" className="hover:text-amber-500 transition flex items-center gap-2"><span className="w-1 h-1 bg-amber-500 rounded-full"></span> מדריך קנייה</a></li>
-              <li><a href="#comparison" className="hover:text-amber-500 transition flex items-center gap-2"><span className="w-1 h-1 bg-amber-500 rounded-full"></span> השוואת דגמים</a></li>
-              <li><a href="#faq" className="hover:text-amber-500 transition flex items-center gap-2"><span className="w-1 h-1 bg-amber-500 rounded-full"></span> שאלות נפוצות</a></li>
-            </ul>
-          </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            {featuredRobots.map((robot) => (
+              <Card key={robot.id} padding={false} className="flex flex-col h-full overflow-hidden">
+                <div className="relative h-64 bg-surface-alt overflow-hidden">
+                  <div className="absolute top-4 right-4 z-10 flex flex-wrap gap-2">
+                    {robot.tags.map(tag => (
+                      <Badge key={tag} variant={tag.includes('מומלץ') ? 'emerald' : 'stone'}>
+                        {tag}
+                      </Badge>
+                    ))}
+                  </div>
+                  <Image
+                    src={robot.image}
+                    alt={robot.name}
+                    fill
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                    className="object-cover group-hover:scale-110 transition-transform duration-700"
+                  />
+                  <div className="absolute bottom-4 left-4">
+                  <div className="bg-white/90 backdrop-blur px-3 py-1 rounded-lg shadow-sm border border-white/50 text-[rgb(var(--accent-hover-rgb))] font-bold">
+                      {robot.rating}/10
+                    </div>
+                  </div>
+                </div>
+                
+                <div className="p-8 flex-1 flex flex-col">
+                  <h3 className="text-2xl font-black mb-3 text-main">{robot.name}</h3>
+                  <p className="text-muted mb-6 flex-1 line-clamp-3">{robot.shortDesc}</p>
 
-          <div>
-            <h4 className="text-white font-bold text-lg mb-6">קטגוריות</h4>
-            <ul className="space-y-4">
-              <li><a href="#" className="hover:text-amber-500 transition">רובוטים לדירות קטנות</a></li>
-              <li><a href="#" className="hover:text-amber-500 transition">רובוטים לבעלי חיים</a></li>
-              <li><a href="#" className="hover:text-amber-500 transition">רובוטים עד 1000 ש"ח</a></li>
-              <li><a href="#" className="hover:text-amber-500 transition">תחזוקה וטיפים</a></li>
-            </ul>
-          </div>
-
-          <div>
-            <h4 className="text-white font-bold text-lg mb-6">גילוי נאות</h4>
-            <p className="leading-relaxed bg-stone-800/50 p-4 rounded-xl border border-stone-800">
-              חלק מהקישורים באתר הם קישורי אפילייט (Aliexpress). רכישה דרכם עשויה להקנות לנו עמלה קטנה ללא תוספת עלות מצדכם. הכנסות אלו מסייעות לנו לתחזק את האתר.
-            </p>
+                  <div className="text-xs text-muted font-bold flex flex-wrap gap-2 mb-2">
+                    <span className="bg-surface-alt border border-soft px-3 py-1 rounded-full">
+                      ★ {formatStars(robot.ratingStars)}
+                    </span>
+                    <span className="bg-surface-alt border border-soft px-3 py-1 rounded-full">
+                      {robot.soldText} נמכרו
+                    </span>
+                    <span className="bg-surface-alt border border-soft px-3 py-1 rounded-full">
+                      {robot.reviewsCount} ביקורות
+                    </span>
+                  </div>
+                  
+                  <div className="space-y-4">
+                    <div className="flex justify-between items-center text-sm font-bold bg-surface-alt p-3 rounded-xl border border-soft">
+                      <span className="text-muted font-medium">ציון התאמה לדירה קטנה:</span>
+                      <span className="text-[rgb(var(--accent-hover-rgb))] font-black">{robot.rating * 10}/100</span>
+                    </div>
+                    
+                    <AffiliateLink
+                      href={robot.affiliateLink}
+                      className="btn-accent w-full text-center"
+                    >
+                      בדיקת מחיר (AliExpress)
+                    </AffiliateLink>
+                    <AffiliateDisclosure className="text-center" />
+                  </div>
+                </div>
+              </Card>
+            ))}
           </div>
         </div>
-        <div className="max-w-7xl mx-auto px-4 text-center text-stone-600">
-          <p>&copy; 2024 רובוט.פרו | כל הזכויות שמורות.</p>
+      </section>
+
+      {/* FAQ Teaser - NEW */}
+      <section className="py-24 bg-surface border-t border-soft">
+        <div className="container-custom">
+          <SectionHeader 
+            title="שאלות נפוצות לפני שקונים"
+            subtitle="ריכזנו עבורכם תשובות קצרות לשאלות הכי בוערות של בעלי דירות קטנות."
+          />
+          <div className="max-w-3xl mx-auto space-y-4">
+            {[
+              { q: "האם רובוט שואב באמת יכול להחליף שטיפה ידנית?", a: "בדירות קטנות התשובה היא כמעט כן מוחלט. הרובוטים המודרניים מצוינים בתחזוקה יומיומית." },
+              { q: "כמה רעש הרובוט עושה באמת?", a: "במצב רגיל, רוב הרובוטים פועלים בעוצמה של 60-65 דציבלים - דומה למזגן פועל." },
+              { q: "האם הרובוט ייתקע בכבלים על הרצפה?", a: "רק דגמים עם חיישני AI או מצלמות בחזית יודעים להימנע מחפצים קטנים כמו כבלים וגרביים." },
+            ].map((faq, i) => (
+              <Card key={i} className="hover:shadow-md border-soft">
+                <h4 className="font-bold text-main mb-2 flex items-center gap-2">
+                  <CheckCircle2 size={18} className="text-[rgb(var(--accent-rgb))]" />
+                  {faq.q}
+                </h4>
+                <p className="text-muted text-sm">{faq.a}</p>
+              </Card>
+            ))}
+            <div className="text-center pt-8">
+              <CTAButton href="/faq" variant="secondary">
+                לכל השאלות והתשובות
+              </CTAButton>
+            </div>
+          </div>
         </div>
-      </footer>
-    </div>
+      </section>
+
+      {/* Bottom CTA - NEW */}
+      <section className="py-24 bg-page overflow-hidden relative border-t border-soft">
+        <div className="absolute top-0 right-0 w-64 h-64 bg-[rgba(var(--accent-warm-rgb),0.14)] rounded-full -translate-y-1/2 translate-x-1/2 blur-3xl" />
+        <div className="container-custom relative z-10 text-center">
+          <h2 className="text-4xl md:text-5xl font-black mb-6 text-main">עדיין מתלבטים?</h2>
+          <p className="text-xl text-muted mb-12 max-w-2xl mx-auto font-medium leading-relaxed">
+            מאמר העומק שלנו עושה סדר: מה חשוב לבדוק בדירה קטנה, מה מיותר לשלם עליו, ואיך לבחור דגם שיתאים לשגרה שלכם.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <CTAButton href="/article" variant="accent">
+              קרא את המאמר המלא
+            </CTAButton>
+            <CTAButton href="/guide" variant="secondary">
+              למדריך הקנייה המקוצר
+            </CTAButton>
+          </div>
+        </div>
+      </section>
+    </main>
   );
 }
